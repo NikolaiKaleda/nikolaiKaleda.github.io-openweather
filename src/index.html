@@ -6,13 +6,23 @@
     <title>Weather</title>
 
     <link rel="stylesheet" href="styles/style.css">
-    
+
     <script src="scripts/main.min.js"></script>
 </head>
 
 <body>
 
-    <button onclick="loadPhones()">Загрузить phones.json!</button>
+        <div>
+            <input id="latitude" type="number" name="latitude" min="-90" max="90" step="1" required placeholder="Enter latitude">
+            <span class="validity"></span>
+        </div>
+        <div>
+            <input id="longitude" type="number" name="longitude"  min="-180" max="180" step="1" required placeholder="Enter longitude">
+            <span class="validity"></span>
+        </div>
+        <div>
+            <input type="button" class="formSubmit">
+        </div> 
 
 </body>
 
