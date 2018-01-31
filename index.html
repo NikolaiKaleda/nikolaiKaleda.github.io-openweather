@@ -6,27 +6,39 @@
     <title>Weather</title>
 
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/reset.css">
 
     <script src="scripts/main.min.js"></script>
 </head>
 
 <body>
+    <main>
+        <header>
+            <h1 class="homePageTitle">Weather</h1>
+        </header>
+        <section class="controlBar">
+            <div class="loadWeather">
+                <input type="button" class="formSubmit" id="start" value="get">
+            </div>
+            <div class="stopSetInterval">
+                <input type="button" class="stopInterval" id="stop" value="stop">
+            </div>
 
-        <div>
-            <input id="latitude" type="number" name="latitude" min="-90" max="90" step="1" required placeholder="Enter latitude">
-            <span class="validity"></span>
-        </div>
-        <div>
-            <input id="longitude" type="number" name="longitude"  min="-180" max="180" step="1" required placeholder="Enter longitude">
-            <span class="validity"></span>
-        </div>
-        <div>
-            <input type="button" class="formSubmit">
-        </div> 
-        
-        <div class="stopSetInterval">
-            <input type="button" class="stopInterval">
-        </div>
+            <div class="userData">
+                <div class="userLat">
+                    <input id="latitude" type="number" name="latitude" min="-90" max="90" step="1" required placeholder="Enter latitude" class="inputLat">
+                    <span class="validity"></span>
+                </div>
+                <div class="userLon">
+                    <input id="longitude" type="number" name="longitude" min="-180" max="180" step="1" required placeholder="Enter longitude" class="inputLon">
+                    <span class="validity"></span>
+                </div>
+            </div>
+
+            <div id="result" class="result">
+            </div>
+        </section>
+    </main>
 
 </body>
 
