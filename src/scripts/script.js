@@ -1,65 +1,72 @@
-document.addEventListener("DOMContentLoaded", function () {
+window.onload = function () {
 
-    var input = document.querySelector('.formSubmit');
-    var stop = document.querySelector('.stopInterval');
     var interval = null;
-    //    var location = window.location;
 
-    input.addEventListener('click', function () {
-        interval = setInterval(clickListener, 1000);
+    document.getElementById('start').onclick = function () {
+        getWeather();
+        interval = setInterval(getWeather, 15000);
         window.onbeforeunload = function (e) {
             return 'Are you sure you want to leave this page?';
         };
-    });
+    };
 
-    function clickListener() {
+    document.getElementById('stop').onclick = function () {
+        clearInterval(interval);
+        window.onbeforeunload = null;
+    };
+
+
+    function getWeather() {
         var latitude = document.querySelector('#latitude').value;
         var longitude = document.querySelector('#longitude').value;
         if (latitude == "" || longitude == "") {
-            getCurrentLocation();
+            var location = getCurrentLocation().then(function (res) {
+                getWeatherData(res.latitude, res.longitude);
+            });
         } else {
-            checkValid(latitude, longitude);
+            if (checkValid(latitude, longitude)) {
+                getWeatherData(latitude, longitude);
+            }
         }
     }
 
+
     function getCurrentLocation() {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            getData(latitude, longitude);
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                var location = {
+                    latitude: latitude,
+                    longitude: longitude,
+                };
+                resolve(location)
+            });
         });
     };
 
     function checkValid(latitude, longitude) {
         var regCoord = /-?\d{1,3}\.\d+/;
         if (regCoord.test(latitude) && regCoord.test(longitude)) {
-            submitForm(latitude, longitude);
+            return true;
         } else {
             alert('Enter valid data');
+            return false;
         }
     }
 
-    function submitForm(latitude, longitude) {
-        getData(latitude, longitude);
-    }
 
-    function getData(latitude, longitude) {
+    function getWeatherData(latitude, longitude) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '139&APPID=79db73bf448b423ff3b6dd802029981d', false);
+        xhr.open('GET', 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' + longitude + '139&APPID=79db73bf448b423ff3b6dd802029981d', false);
         xhr.send();
         if (xhr.status != 200) {
             alert(xhr.status + ', ' + xhr.statusText);
         } else {
-            console.log(JSON.parse(xhr.responseText));
+            var data = JSON.parse(xhr.responseText);
+            console.log(data);
+            document.getElementById('result').innerHTML = "Name: " + data.name + " temp: " + data.main.temp;
         }
     };
-
-    stop.addEventListener('click', function () {
-        clearInterval(interval);
-        window.onbeforeunload = null;
-    });
-
-
-
-
-});
+};

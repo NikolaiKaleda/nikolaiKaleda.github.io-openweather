@@ -1,0 +1,83 @@
+// VARIABLES
+@color-input: rgba(255, 255, 255, .7);
+@color-bg-controls: rgba(255, 255, 255, .1);
+@color-bg-controls-hover: rgba(255, 255, 255, .2);
+@color-input-bg: #195D98;
+
+// MIXINS
+.input-placeholder {
+    ::-webkit-input-input {
+        color: @color-input;
+    }
+    color: @color-input;
+}
+
+:-moz-placeholder {
+    color: @color-input;
+}
+
+:-ms-input-placeholder {
+    color: @color-input;
+}
+
+}
+
+
+main {
+    header {
+        .homePageTitle {
+            padding: 0.3em;
+        }
+    }
+    .controlBar {
+        background-color: @color-bg-controls;
+        position: relative;
+        padding: 0.5em;
+        height: 2.5em;
+        .loadWeather,
+        .stopSetInterval {
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+            .formSubmit,
+            .stopInterval {
+                border: none;
+                background-color: @color-bg-controls;
+                color: @color-input;
+                cursor: pointer;
+                height: 100%;
+                width: 7em;
+            }
+            .formSubmit:hover,
+            .stopInterval:hover {
+                background-color: @color-bg-controls-hover;
+            }
+        }
+        .userData {
+            display: inline-block;
+            float: right;
+            height: 100%;
+            .userLat,
+            userLon {
+                vertical-align: middle;
+                display: inline-block;
+                height: 100%;
+                .inputLat,
+                .inputLon {
+                    background-color: @color-bg-controls;
+                    border: none;
+                    color: @color-input;
+                    height: 100%;
+                    width: 10em;
+                    text-align: center;
+                }
+                .inputLat:hover,
+                .inputLon:hover {
+                    background-color: @color-bg-controls-hover;
+                }
+                .input-placeholder;
+            }
+        }
+        .result {}
+    }
+}

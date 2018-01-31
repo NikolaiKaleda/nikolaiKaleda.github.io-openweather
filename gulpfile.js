@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+//var uglify = require('gulp-uglify');
 var cleanCSS = require('gulp-clean-css');
 var del = require('del');
 
@@ -45,7 +45,7 @@ function styles() {
 function scripts() {
   return gulp.src(paths.scripts.src, { sourcemaps: true })
     .pipe(babel())
-    .pipe(uglify())
+//    .pipe(uglify())
     .pipe(concat('main.min.js'))
     .pipe(gulp.dest(paths.scripts.dest));
 }
