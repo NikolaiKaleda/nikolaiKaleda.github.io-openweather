@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var input = document.querySelector('.formSubmit');
     var stop = document.querySelector('.stopInterval');
     var interval = null;
-    var location = window.location;
+    //    var location = window.location;
 
     input.addEventListener('click', function () {
-        interval = setInterval(clickListener, 10000);
+        interval = setInterval(clickListener, 1000);
         window.onbeforeunload = function (e) {
             return 'Are you sure you want to leave this page?';
         };
@@ -54,13 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-
-
-
-
-
     stop.addEventListener('click', function () {
         clearInterval(interval);
+        window.onbeforeunload = null;
     });
 
 
