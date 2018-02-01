@@ -18,6 +18,10 @@ var paths = {
   html: {
       src: 'src/*.html',
       dest: 'build'
+  },
+  img: {
+      src: 'src/img/**/*.**',
+      dest: 'build/img'
   }
 };
 
@@ -55,10 +59,28 @@ function html() {
     .pipe(gulp.dest(paths.html.dest));
 }
 
+function img() {
+  return gulp.src(paths.img.src, { sourcemaps: true })
+    .pipe(gulp.dest(paths.img.dest));
+}
+
+//gulp.task('image:build', function () {
+//    gulp.src(path.src.img) //Выберем наши картинки
+//        .pipe(imagemin({ //Сожмем их
+//            progressive: true,
+//            svgoPlugins: [{removeViewBox: false}],
+//            use: [pngquant()],
+//            interlaced: true
+//        }))
+//        .pipe(gulp.dest(path.build.img)) //И бросим в build
+//        .pipe(reload({stream: true}));
+//});
+
 function watch() {
   gulp.watch(paths.scripts.src, scripts);
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.html.src, html);
+  gulp.watch(paths.img.src, img);
 }
 
 /*
@@ -68,12 +90,13 @@ exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
+exports.img = img;
 exports.watch = watch;
 
 /*
  * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
  */
-var build = gulp.series(clean, gulp.parallel(styles, scripts, html));
+var build = gulp.series(clean, gulp.parallel(styles, scripts, html, img));
 
 /*
  * You can still use `gulp.task` to expose tasks

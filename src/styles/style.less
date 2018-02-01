@@ -6,21 +6,100 @@
 
 // MIXINS
 .input-placeholder {
-    ::-webkit-input-input {
+    ::-webkit-input-placeholder {
         color: @color-input;
     }
-    color: @color-input;
+    ::-moz-placeholder {
+        color: @color-input;
+    }
+    /* Firefox 19+ */
+    :-moz-placeholder {
+        color: @color-input;
+    }
+    /* Firefox 18- */
+    :-ms-input-placeholder {
+        color: @color-input;
+    }
 }
 
-:-moz-placeholder {
-    color: @color-input;
+// Classes
+.d01 {
+    background-position: 0 0;
 }
 
-:-ms-input-placeholder {
-    color: @color-input;
+.d02 {
+    background-position: -100px 0;
 }
 
+.d03 {
+    background-position: -600px -240px;
 }
+
+.d04 {
+    background-position: -500px -240px;
+}
+
+.d09 {
+    background-position: -300px -80px;
+}
+
+.d10 {
+    background-position: -400px 0;
+}
+
+.d11 {
+    background-position: -600px -240px;
+}
+
+.d13 {
+    background-position: -400px -160px;
+}
+
+.d13 {
+    background-position: -600px -160px;
+}
+
+.d50 {
+    background-position: -600px -160px;
+}
+
+.n01 {
+    background-position: -200px 0;
+}
+
+.n02 {
+    background-position: -100px -160px;
+}
+
+.n03 {
+    background-position: -600px -240px;
+}
+
+.n04 {
+    background-position: -500px -240px;
+}
+
+.n09 {
+    background-position: -300px -80px;
+}
+
+.n10 {
+    background-position: 0 -320px;
+}
+
+.n11 {
+    background-position: -600px -240px;
+}
+
+.n13 {
+    background-position: -400px -160px;
+}
+
+.n50 {
+    background-position: -600px -160px;
+}
+
+
 
 
 main {
@@ -30,7 +109,7 @@ main {
         }
     }
     .controlBar {
-        background-color: @color-bg-controls;
+        background-color: @color-input-bg;
         position: relative;
         padding: 0.5em;
         height: 2.5em;
@@ -58,7 +137,7 @@ main {
             float: right;
             height: 100%;
             .userLat,
-            userLon {
+            .userLon {
                 vertical-align: middle;
                 display: inline-block;
                 height: 100%;
@@ -78,6 +157,44 @@ main {
                 .input-placeholder;
             }
         }
-        .result {}
+        //        .result {}
+    }
+    .weatherInfo {
+        .location {
+            .locationName {
+                text-align: center;
+                margin-top: 1em;
+                text-transform: uppercase;
+            }
+        }
+        .tempAndSky {
+            text-align: center;
+            position: relative;
+            height: 80px;
+            .skyInfo {
+                display: inline-block;
+                #skyImg {
+                    width: 100px;
+                    height: 80px;
+                }
+            }
+            .tempInfo {
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                margin-top: -9px;
+                #temperature {}
+            }
+        }
+        .weatherNameContainer {
+            text-align: center;
+            #weatherName {}
+        }
+        .updateInfo {
+            text-align: center;
+            #updateMoment {
+                
+            }
+        }
     }
 }
