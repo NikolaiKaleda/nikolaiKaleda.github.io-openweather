@@ -22,6 +22,10 @@ var paths = {
   img: {
       src: 'src/img/**/*.**',
       dest: 'build/img'
+  },
+  fonts: {
+      src: 'src/fonts/**/*.**',
+      dest: 'build/fonts'
   }
 };
 
@@ -64,6 +68,11 @@ function img() {
     .pipe(gulp.dest(paths.img.dest));
 }
 
+function fonts() {
+  return gulp.src(paths.fonts.src, { sourcemaps: true })
+    .pipe(gulp.dest(paths.fonts.dest));
+}
+
 //gulp.task('image:build', function () {
 //    gulp.src(path.src.img) //Выберем наши картинки
 //        .pipe(imagemin({ //Сожмем их
@@ -81,6 +90,7 @@ function watch() {
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.html.src, html);
   gulp.watch(paths.img.src, img);
+  gulp.watch(paths.fonts.src, fonts);
 }
 
 /*
@@ -91,12 +101,13 @@ exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
 exports.img = img;
+exports.fonts = fonts;
 exports.watch = watch;
 
 /*
  * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
  */
-var build = gulp.series(clean, gulp.parallel(styles, scripts, html, img));
+var build = gulp.series(clean, gulp.parallel(styles, scripts, html, img, fonts));
 
 /*
  * You can still use `gulp.task` to expose tasks

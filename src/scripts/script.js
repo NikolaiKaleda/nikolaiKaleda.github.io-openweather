@@ -71,93 +71,154 @@ window.onload = function () {
             var weatherImgPos = getCorrectIcon(data);
             var temperature = data.main.temp;
             var weatherName = data.weather[0].description;
-            useData(cityName, region, weatherImgPos, temperature, weatherName);
+            var cloudines = data.clouds.all;
+            var windSpeed = data.wind.speed;
+            var windDeg = data.wind.deg;
+            var visibility = data.visibility;
+            var sunrise = data.sys.sunrise;
+            var sunset = data.sys.sunset;
+
+            var pressure = data.main.pressure;
+            useData(cityName, region, weatherImgPos, temperature, weatherName, cloudines, windSpeed, windDeg, visibility, pressure, sunrise, sunset);
         }
     };
 
-    
-    function getCorrectIcon (data) {
+
+    function getCorrectIcon(data) {
         var weatherImgCode = data.weather[0].icon;
         var imgId;
-        if ( weatherImgCode == "01d" ) {
+        if (weatherImgCode == "01d") {
             return imgId = "0 0";
-            
-        } else if ( weatherImgCode == "02d" ) {
+        } else if (weatherImgCode == "02d") {
             return imgId = "-100px 0";
-            
-        } else if ( weatherImgCode == "03d" ) {
+        } else if (weatherImgCode == "03d") {
             return imgId = "-600px -240px";
-            
-        } else if ( weatherImgCode == "04d" ) {
+        } else if (weatherImgCode == "04d") {
             return imgId = "-500px -240px";
-            
-        } else if ( weatherImgCode == "09d" ) {
+        } else if (weatherImgCode == "09d") {
             return imgId = "-300px -80px";
-            
-        } else if ( weatherImgCode == "10d" ) {
+        } else if (weatherImgCode == "10d") {
             return imgId = "-400px 0";
-            
-        } else if ( weatherImgCode == "11d" ) {
+        } else if (weatherImgCode == "11d") {
             return imgId = "-600px -240px";
-            
-        } else if ( weatherImgCode == "13d" ) {
+        } else if (weatherImgCode == "13d") {
             return imgId = "-400px -160px";
-            
-        } else if ( weatherImgCode == "50d" ) {
+        } else if (weatherImgCode == "50d") {
             return imgId = "-600px -160px";
-            
-        } else if ( weatherImgCode == "01n" ) {
+        } else if (weatherImgCode == "01n") {
             return imgId = "-200px 0";
-            
-        } else if ( weatherImgCode == "02n" ) {
+        } else if (weatherImgCode == "02n") {
             return imgId = "-100px -160px";
-            
-        } else if ( weatherImgCode == "03n" ) {
+        } else if (weatherImgCode == "03n") {
             return imgId = "-600px -240px";
-            
-        } else if ( weatherImgCode == "04n" ) {
+        } else if (weatherImgCode == "04n") {
             return imgId = "-500px -240px";
-            
-        } else if ( weatherImgCode == "09n" ) {
+        } else if (weatherImgCode == "09n") {
             return imgId = "-300px -80px";
-            
-        } else if ( weatherImgCode == "10n" ) {
+        } else if (weatherImgCode == "10n") {
             return imgId = "0 -320px";
-            
-        } else if ( weatherImgCode == "11n" ) {
+        } else if (weatherImgCode == "11n") {
             return imgId = "-600px -240px";
-            
-        } else if ( weatherImgCode == "13n" ) {
+        } else if (weatherImgCode == "13n") {
             return imgId = "-400px -160px";
-            
-        } else if ( weatherImgCode == "50n" ) {
+        } else if (weatherImgCode == "50n") {
             return imgId = "-600px -160px";
+        } else {
+            alert("Invalid data with server");
         }
     }
-    
-    
-    function useData (cityName, region, weatherImgPos, temperature, weatherName) {
+
+
+    function useData(cityName, region, weatherImgPos, temperature, weatherName, cloudines, windSpeed, windDeg, visibility, pressure, sunrise, sunset) {
         var cityNameElement = document.getElementById('locationName');
         var weatherImg = document.getElementById('skyImg');
         var tempElement = document.getElementById('temperature');
         var weatherNameElement = document.getElementById('weatherName');
         var updateMomentElement = document.getElementById('updateMoment');
-        
+        var cloudsPercent = document.getElementById('cloudsPercent');
+        var windSpeedElement = document.getElementById('windSpeed');
+        var windDegElement = document.getElementById('windDeg');
+        var visibilityElement = document.getElementById('visibility');
+        var pressureElement = document.getElementById('pressure');
+        var sunriseElement = document.getElementById('sunrise');
+        var sunsetElement = document.getElementById('sunset');
+
         var noMoment = objToday = new Date().toLocaleString();
-        
-        console.log(noMoment);
-        
+
         cityNameElement.innerHTML = cityName + ", " + region;
-        tempElement.innerHTML = temperature + "&#176;" + "F";
+        tempElement.innerHTML = (temperature - 273.15) + "&#176;" + "C";
         weatherImg.style.background = "url(img/weather.png) no-repeat";
         weatherImg.style.backgroundPosition = weatherImgPos;
-        updateMomentElement.innerHTML = "Updated as of " + noMoment;
-
+        updateMomentElement.innerHTML = "updated as of " + noMoment;
+        cloudsPercent.innerHTML = "cloudines: " + cloudines + "%";
+        windSpeedElement.innerHTML = "Wind: " + windSpeed + "m/s";
+        var windPosition = degToCompass(windDeg);
+        windDegElement.style.background = "url(img/wind_arrow.png) no-repeat";
+        windDegElement.style.backgroundPosition = windPosition;
         weatherNameElement.innerHTML = weatherName;
+        visibilityElement.innerHTML = "visibility: " + visibility + "m";
+        pressureElement.innerHTML = "pressure: " + pressure + " hPa";
+        var sunriseTime = getSunrise(sunrise);
+        sunriseElement.innerHTML = "sunrise: " + sunriseTime;
+        var sunsetTime = getSunrise(sunset);
+        sunsetElement.innerHTML = "sunset: " + sunsetTime;
     }
-    
-    
-    
-    
-    
+
+
+    function degToCompass(num) {
+        var val = Math.floor((num / 22.5) + 0.5);
+        var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+        var arrow = arr[(val % 16)];
+        var windArrow;
+        if (arrow == "N") {
+            return windArrow = "0 0";
+        } else if (arrow == "NNE") {
+            return windArrow = "-50px 0";
+        } else if (arrow == "NE") {
+            return windArrow = " -200px";
+        } else if (arrow == "ENE") {
+            return windArrow = "-50px -200px";
+        } else if (arrow == "E") {
+            return windArrow = "0 -150px";
+        } else if (arrow == "ESE") {
+            return windArrow = "-50px -150px";
+        } else if (arrow == "SE") {
+            return windArrow = "0 -250px";
+        } else if (arrow == "SSE") {
+            return windArrow = "-50px -250px";
+        } else if (arrow == "S") {
+            return windArrow = "0 -50px";
+        } else if (arrow == "SSW") {
+            return windArrow = "-50px -50px";
+        } else if (arrow == "SW") {
+            return windArrow = "0 -300px";
+        } else if (arrow == "WSW") {
+            return windArrow = "-50px -300px";
+        } else if (arrow == "W") {
+            return windArrow = "0 -100px";
+        } else if (arrow == "WNW") {
+            return windArrow = "-50px -100px";
+        } else if (arrow == "NW") {
+            return windArrow = "0 -350px";
+        } else if (arrow == "NNW") {
+            return windArrow = "-50px -350px";
+        } else {
+            alert("Invalid data with server");
+        }
+    }
+
+
+    function getSunrise(sunriseTime) {
+        var date = new Date(sunriseTime * 1000);
+        var hours = date.getHours();
+        var minutes = "0" + date.getMinutes();
+        var seconds = "0" + date.getSeconds();
+        var formattedTime;
+        return formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    }
+
+
+
+
+
 };
