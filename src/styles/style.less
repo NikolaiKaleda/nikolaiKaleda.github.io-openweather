@@ -1,17 +1,18 @@
 // FONTS
 @font-face {
     font-family: 'Legendum';
-    src: url('../Legendum.eot');
-    src: url('../Legendum.eot?#iefix') format('embedded-opentype'),
-    url('../fLegendum.woff') format('woff'),
-    url('../Legendum.ttf') format('truetype'),
-    url('../Legendum.svg#CreativeBlockBBBold') format('svg');
+    src: url('../fonts/Legendum.eot');
+    src: url('../fonts/Legendum.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Legendum.woff') format('woff'),
+    url('../fonts/Legendum.ttf') format('truetype'),
+    url('../fonts/Legendum.svg#CreativeBlockBBBold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 
 // VARIABLES
+@color-font: #fff;
 @color-input: rgba(255,255,255,.7);
 @color-bg-controls: rgba(255,255,255,.1);
 @color-bg-controls-hover: rgba(255,255,255,.2);
@@ -41,11 +42,24 @@
 
 
 // MAIN
+html {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+body {
+    height: 100%;
+}
 main {
+    color: @color-font;
+    text-shadow: 2px 2px 3px black;
+    height: 100%;
     .fonts();
     header {
         .homePageTitle {
             padding: 0.3em;
+            text-shadow: none;
+            color: black;
         }
     }
     .controlBar {
@@ -101,6 +115,9 @@ main {
     .weatherInfo {
         min-height: 100%;
         overflow: hidden;
+        height: 100%;
+        position: absolute;
+        width: 100%;
         .location {
             .locationName {
                 font-size: 1.3em;
