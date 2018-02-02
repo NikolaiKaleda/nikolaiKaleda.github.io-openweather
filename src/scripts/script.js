@@ -1,8 +1,10 @@
 window.onload = function () {
 
+    
     var interval = null,
         intervalValue = 15000;
 
+    
     document.getElementById('start').onclick = function () {
         getWeather();
         interval = setInterval(getWeather, intervalValue);
@@ -11,6 +13,7 @@ window.onload = function () {
         };
     };
 
+    
     document.getElementById('stop').onclick = function () {
         clearInterval(interval);
         window.onbeforeunload = null;
@@ -18,8 +21,8 @@ window.onload = function () {
 
 
     function getWeather() {
-        var latitude = document.querySelector('#latitude').value,
-            longitude = document.querySelector('#longitude').value;
+        var latitude = document.getElementById('latitude').value,
+            longitude = document.getElementById('longitude').value;
         if (latitude == "" || longitude == "") {
             var location = getCurrentLocation().then(function (res) {
                 getWeatherData(res.latitude, res.longitude);
@@ -31,6 +34,7 @@ window.onload = function () {
         }
     }
 
+    
     function getCurrentLocation() {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -46,6 +50,7 @@ window.onload = function () {
         });
     };
 
+    
     function checkValid(latitude, longitude) {
         var regCoord = /-?\d{1,3}\.\d+/;
         if (regCoord.test(latitude) && regCoord.test(longitude)) {
@@ -80,7 +85,7 @@ window.onload = function () {
                 sunrise = data.sys.sunrise,
                 sunset = data.sys.sunset,
                 pressure = data.main.pressure;
-            
+            console.log(sunrise + "   dsfsdg   " + sunset);
             var responseData = {
                 cityName: cityName,
                 region: region,
@@ -215,9 +220,9 @@ window.onload = function () {
         visibilityElement.innerHTML = "visibility: " + responseData.visibility + "m";
         pressureElement.innerHTML = "pressure: " + responseData.pressure + " hPa";
         var sunriseTime = getSunrise(responseData.sunrise);
-        sunriseElement.innerHTML = "sunrise: " + responseData.sunriseTime;
+        sunriseElement.innerHTML = "sunrise: " + sunriseTime;
         var sunsetTime = getSunrise(responseData.sunset);
-        sunsetElement.innerHTML = "sunset: " + responseData.sunsetTime;
+        sunsetElement.innerHTML = "sunset: " + sunsetTime;
         mainBgElement.style.background = "url(" + responseData.mainBgImg + ") no-repeat";
         mainBgElement.style.backgroundSize = "cover";
     }
@@ -290,11 +295,8 @@ window.onload = function () {
             minutes = "0" + date.getMinutes(),
             seconds = "0" + date.getSeconds(),
             formattedTime;
+        
+        console.log(sunriseTime  );
         return formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     }
-
-
-
-
-
 };
